@@ -16,10 +16,10 @@ class OpenAIService:
     async def create_prediction(self, dto: OpenAiCreate) -> Dict[str, Any]:
         # Verificar si el usuario ya existe
         prompt = f'''In the next format write a prediction for the soccer match between local: {dto.local_team} versus visitor: {dto.visitor_team} considering 
-        the following information: Temperature is {dto.temperature}°C, Weather is {dto.weather}% and Wind speed is {dto.wind_speed} miles/hour.
+        the following information: Temperature is {dto.temperature}°C, Weather is {dto.weather} and Wind speed is {dto.wind_speed} km/h.
         the format is:
-        Análisis del Partido: 'local_team' vs 'visitor_team'
-        Basado en las condiciones climáticas y el contexto actual, 'type of match like Equilibrado or Con ventaja para un equipo'.
+        Match Analisys: 'local_team' vs 'visitor_team'
+        Based in weather conditions and actual context, 'type of match like balanced or With an advantage for a team'.
         'temperature_description' 'weather description' y 'wind description'.
         'favored playstyle according with the conditions justified ' 'Prediction of the performance of the teams' 'Prediction of winner with a percentage'
         '''
