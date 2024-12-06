@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr
-from typing import Dict, Optional
+from typing import Dict, Optional,Any
+from datetime import datetime
 
 class LoginDto(BaseModel):
     email: EmailStr
@@ -17,12 +18,13 @@ class UserResponse(BaseModel):
         
 class AuthResponseDto(BaseModel):
     user: UserResponse  # Devuelve el usuario (email, nombre, etc.)
-    backendTokens: Dict[str, str]  # Contiene accessToken y refreshToken
+    backendTokens: Dict[str, Any]  # Contiene accessToken y refreshToken
     class Config:
         from_attributes = True
         
 class RefreshTokenResponseDto(BaseModel):
     accessToken:str
     refreshToken:str
+    expiresIn: int
     class Config:
         from_attributes = True
