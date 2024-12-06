@@ -24,7 +24,7 @@ class AuthService:
         return {
             "user": user,
             "backendTokens": {
-                "accessToken": create_access_token(payload, expires_delta=timedelta(seconds=15)),
+                "accessToken": create_access_token(payload, expires_delta=timedelta(minutes=15)),
                 "refreshToken": create_refresh_token(payload, expires_delta=timedelta(days=7)),
                 "expiresIn": int(time.time()) + self.EXPIRE_TIME,
             },
@@ -43,7 +43,7 @@ class AuthService:
             "sub": user["sub"],
         }
         return {
-            "accessToken": create_access_token(payload, expires_delta=timedelta(seconds=15)),
+            "accessToken": create_access_token(payload, expires_delta=timedelta(minutes=15)),
             "refreshToken": create_refresh_token(payload, expires_delta=timedelta(days=7)),
             "expiresIn":  int(time.time()) + self.EXPIRE_TIME,
         }
