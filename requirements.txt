@@ -2,6 +2,8 @@ fastapi
 uvicorn[standard]
 pydantic
 pydantic[email]
+pydantic[http]
+pydantic_settings
 sqlalchemy
 alembic
 pyjwt
@@ -13,3 +15,4 @@ loguru
 psycopg2
 cuid
 openai
+asyncpg

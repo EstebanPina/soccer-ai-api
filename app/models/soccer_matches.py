@@ -11,6 +11,8 @@ class SoccerMatches(Base):
     prediction_ai = Column(String, nullable=True)
     local_team = Column(String, nullable=False)
     visitor_team = Column(String, nullable=False)
+    local_team_img = Column(String, nullable=True)
+    visitor_team_img = Column(String, nullable=True)
     finished = Column(Boolean, default=False)
     venueId = Column(String, ForeignKey("Venue.id"), nullable=False)
     
