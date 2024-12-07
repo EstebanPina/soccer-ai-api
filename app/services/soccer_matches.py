@@ -31,13 +31,14 @@ class SoccerMatchesService:
         await self.db_session.refresh(new_match)
         return new_match
       
-    async def find_by_id(self, id:str) -> Dict[str, Any]:
-        statement = select(SoccerMatches).where(SoccerMatches.id == id)
+    async def find_by_id(self, dto:SoccerMatchesCreate) -> Dict[str, Any]:
+        statement = select(SoccerMatches).where(SoccerMatches.id_sports_api == dto.id_sports_api)
         result=await self.db_session.execute(statement)
         match=result.scalar_one_or_none()
-        if not match:
-            raise HTTPException(status_code=400, detail="Match is not registered")
-        return match
+        print(match)
+        if match:
+            return match
+        return await self.create_match(dto)
     
     async def count_views(self, id:str) -> Dict[str, Any]:
         statement = select(SoccerMatches).where(SoccerMatches.id == id)
