@@ -37,15 +37,7 @@ class SoccerMatchesService:
         match=result.scalar_one_or_none()
         print(match)
         if match:
+            match.view_count+=1
+            await self.db_session.commit()
             return match
         return await self.create_match(dto)
-    
-    async def count_views(self, id:str) -> Dict[str, Any]:
-        statement = select(SoccerMatches).where(SoccerMatches.id == id)
-        result=await self.db_session.execute(statement)
-        match=result.scalar_one_or_none()
-        if not match:
-            raise HTTPException(status_code=400, detail="Match is not registered")
-        match.views+=1
-        await self.db_session.commit()
-        return match
