@@ -8,6 +8,8 @@ class Settings(BaseSettings):
 
     # URL de la base de datos
     DATABASE_URL: str = Field(..., env="DATABASE_URL")
+    TEST_USER:str=Field(..., env="TEST_USER")
+    TEST_PASSWORD:str=Field(..., env="TEST_PASSWORD")
 
     class Config:
         env_file = ".env"
