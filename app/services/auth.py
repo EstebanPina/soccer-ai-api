@@ -39,6 +39,7 @@ class AuthService:
 
     async def refresh_token(self, user: dict):
         payload = {
+            "id": user["id"],
             "username": user["username"],
             "sub": user["sub"],
         }

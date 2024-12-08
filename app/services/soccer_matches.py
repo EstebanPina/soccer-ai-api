@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException
 from app.models.soccer_matches import SoccerMatches
 from app.models.venue import Venue
-from app.schemas.soccer_matches import SoccerMatchesCreate
+from app.schemas.soccer_matches import SoccerMatchesCreate, SoccerMatchesRead
 from app.schemas.OpenAi import OpenAiCreate
 from app.services.open_ai import OpenAIService
 from typing import Dict, Any
@@ -41,3 +41,13 @@ class SoccerMatchesService:
             await self.db_session.commit()
             return match
         return await self.create_match(dto)
+    
+    async def find_many(self, dto:OpenAiCreate) -> Dict[str, Any]:
+        print(dto.favorites)
+        statement = select(SoccerMatches).where(SoccerMatches.id_sports_api.in_(dto.favorites))
+        result=await self.db_session.execute(statement)
+        matches=result.scalars().all()
+        matches_read=[SoccerMatchesRead.from_orm(match) for match in matches]
+        if not matches:
+            raise HTTPException(status_code=400, detail="Matches not found")
+        return matches_read

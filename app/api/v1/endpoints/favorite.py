@@ -12,6 +12,7 @@ async def checkhealth():
   
 @router.get("/", response_model=FavoriteResponse)
 async def get_my_favorites(db: Session = Depends(get_db), current_user: dict = Depends(get_current_user)):
+    print(current_user)
     favorite_service = FavoriteService(db)
     favorites = await favorite_service.get_favorites(current_user["id"])
     if not favorites:
