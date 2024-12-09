@@ -16,18 +16,22 @@ class SportsDbService:
     lower_country = country.lower()
     yearly_seasons_leagues=["brazil"] # Leagues that have a yearly season and not a bi-yearly season
     season_str = f"{date.year}" if lower_country in yearly_seasons_leagues else f"{date.year}-{date.year+1}" # Get the season string based on the country
+    if lower_country not in self.countries_cases:
+            raise HTTPException(status_code=400, detail="Country not found")
     country_object=dict(self.countries_cases[lower_country])
-    
     url=f"https://www.thesportsdb.com/api/v1/json/3/eventsseason.php?id={country_object['id']}&s={season_str}" # Get the matches for the season
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
         if response.status_code != 200:
             raise HTTPException(status_code=400, detail="Error getting matches")
-        return response.json()
+        data= response.json()
+        return data
 
   async def get_all_cities(self,country:str="") -> dict:
     teams=None
     lower_country = country.lower()
+    if lower_country not in self.countries_cases:
+            raise HTTPException(status_code=400, detail="Country not found")
     country_object=dict(self.countries_cases[lower_country])
     async with httpx.AsyncClient() as client:
         response = await client.get(f"https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l={country_object['name']}")# Get all teams from the league

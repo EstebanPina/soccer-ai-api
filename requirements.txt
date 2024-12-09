@@ -12,7 +12,8 @@ python-dotenv
 httpx
 pytest
 loguru
-psycopg2
 cuid
 openai
 asyncpg
+pytest-asyncio
+mock-alchemy
