@@ -11,8 +11,8 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, 
 def health_check():
     return {"message": "API is running"}
 
-app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
-app.include_router(user.router, prefix="/api/v1/user", tags=["user"])
-app.include_router(favorite.router, prefix="/api/v1/favorite", tags=["favorite"])
-app.include_router(sportsdb.router, prefix="/api/v1/sportsdb", tags=["sportsdb"])
-app.include_router(soccer_matches.router, prefix="/api/v1/soccer_matches", tags=["soccer_matches"])
+app.include_router(auth.router, prefix="/api_soccer/v1/auth", tags=["auth"])
+app.include_router(user.router, prefix="/api_soccer/v1/user", tags=["user"])
+app.include_router(favorite.router, prefix="/api_soccer/v1/favorite", tags=["favorite"])
+app.include_router(sportsdb.router, prefix="/api_soccer/v1/sportsdb", tags=["sportsdb"])
+app.include_router(soccer_matches.router, prefix="/api_soccer/v1/soccer_matches", tags=["soccer_matches"])
