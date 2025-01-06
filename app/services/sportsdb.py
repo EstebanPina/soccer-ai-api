@@ -11,11 +11,13 @@ class SportsDbService:
     self.countries_cases={"spain":{"id":"4335","name":"Spanish La Liga","strMap":"40°00′00″N 4°00′00″W"},"brazil":{"id":"4351","name":"Brazilian Serie A","strMap":"15°47′38″S 47°52′58″W"}}
 
   async def get_league_matches(self, country:str="") -> dict:
-    # Verificar si el usuario ya existe
     date = datetime.datetime.now()
     lower_country = country.lower()
     yearly_seasons_leagues=["brazil"] # Leagues that have a yearly season and not a bi-yearly season
-    season_str = f"{date.year}" if lower_country in yearly_seasons_leagues else f"{date.year}-{date.year+1}" # Get the season string based on the country
+    if date.month < 6: # If the current month is less than 6, the season is the previous year
+        season_str = f"{date.year-1}" if lower_country in yearly_seasons_leagues else f"{date.year-1}-{date.year}"
+    else:
+      season_str = f"{date.year}" if lower_country in yearly_seasons_leagues else f"{date.year}-{date.year+1}" # Get the season string based on the current year
     if lower_country not in self.countries_cases:
             raise HTTPException(status_code=400, detail="Country not found")
     country_object=dict(self.countries_cases[lower_country])
